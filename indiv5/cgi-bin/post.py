@@ -2,8 +2,6 @@ import cgi
 import os
 import sqlite3
 
-import numpy as np
-
 
 
 DB_NAME = "space.db"
@@ -22,7 +20,7 @@ table = os.getenv("QUERY_STRING")
 
 if table in tables:
     columns = con.cursor().execute(f"PRAGMA table_info({table});").fetchall()
-    cols = np.array(list(map(lambda i: i[1], columns[1:])))
+    cols = list(map(lambda i: i[1], columns[1:]))
     values = map(form.getvalue, cols)
     con.cursor().execute(f"""INSERT INTO {table} ({','.join(cols)}) VALUES ("{'","'.join(values)}");""")
     con.commit()
