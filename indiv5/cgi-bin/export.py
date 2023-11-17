@@ -50,9 +50,8 @@ root.withdraw()
 file_path = filedialog.asksaveasfilename(defaultextension=".xml", filetypes=[("XML files", "*.xml")])
 
 if file_path:
-    # Сохранение XML-документа в файл
     with open(file_path, 'w') as file:
-        file.write(doc.toprettyxml(indent='\t'))
+        file.write(doc.toprettyxml())
 
 conn.close()
 

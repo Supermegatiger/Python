@@ -9,16 +9,13 @@ DB_NAME = "space.db"
 with open("head.txt","r") as f:
     print(f.read())
 
-
 def import_from_xml(cursor, doc):
     for node in doc.documentElement.childNodes:
-        if node.nodeType != node.ELEMENT_NODE:
+        if node.nodeType == node.ELEMENT_NODE:
             table_name = node.tagName
-            entries = node.childNodes()
-
-            for entry in entries[0].getElementsByTagName('entry'):
-                values = [field.firstChild.nodeValue for field in entry.childNodes]
-
+            entries = list(filter(lambda i : i.nodeType == i.ELEMENT_NODE, node.childNodes))
+            for entry in entries:
+                values = [field.firstChild.nodeValue for field in entry.childNodes if field.nodeType == field.ELEMENT_NODE]
                 placeholders = ', '.join(['?' for _ in range(len(values))])
                 query = f"INSERT INTO {table_name} VALUES ({placeholders})"
                 cursor.execute(query, values)
@@ -33,13 +30,10 @@ if xml_file_path:
 
     doc = parse(xml_file_path)
 
-    # cursor.execute("SELECT name FROM sqlite_master WHERE type='table' and name != 'sqlite_sequence';")
-    # table_names = set(node.tagName for node in doc.documentElement.childNodes if node.nodeType == node.ELEMENT_NODE)
-    # print(table_names)
     import_from_xml(cursor, doc)
-
+    # print([node for node in a[0].childNodes if node.nodeType == node.ELEMENT_NODE])
     conn.commit()
     conn.close()
 
-# print("<script>location.href='/'</script>")
+print("<script>location.href='/'</script>")
 
