@@ -4,6 +4,7 @@ from django.db import models
 # Create your models here
 
 class GalaxyType(models.Model):
+    objects = models.Manager
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30, verbose_name='Тип галактики')
 
@@ -16,11 +17,12 @@ class GalaxyType(models.Model):
 
 
 class Galaxy(models.Model):
+    objects = models.Manager
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Название')
     age = models.FloatField(default=0, verbose_name='Возраст')
     size = models.FloatField(default=0, verbose_name='Размер')
-    type = models.ForeignKey('GalaxyType', verbose_name='Тип', on_delete=models.CASCADE)
+    type = models.ForeignKey(GalaxyType, verbose_name='Тип', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -31,11 +33,12 @@ class Galaxy(models.Model):
 
 
 class StarSystem(models.Model):
+    objects = models.Manager
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Название')
     age = models.FloatField(default=0, verbose_name='Возраст')
     radius = models.FloatField(default=0, verbose_name='Радиус')
-    galaxy = models.ForeignKey('Galaxy', verbose_name='Галактика', on_delete=models.CASCADE)
+    galaxy = models.ForeignKey(Galaxy, verbose_name='Галактика', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -46,13 +49,14 @@ class StarSystem(models.Model):
 
 
 class Planet(models.Model):
+    objects = models.Manager
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Название')
     age = models.FloatField(default=0, verbose_name='Возраст')
     radius = models.FloatField(default=0, verbose_name='Радиус')
     mass = models.FloatField(default=0, verbose_name='Масса')
     habitable = models.BooleanField(default=False, choices=((False,'жизни нет'),(True,'возможна жизнь')), verbose_name='Обитаема ли')
-    system = models.ForeignKey('StarSystem', verbose_name='Звездная система', on_delete=models.CASCADE)
+    system = models.ForeignKey(StarSystem, verbose_name='Звездная система', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -63,13 +67,14 @@ class Planet(models.Model):
 
 
 class Star(models.Model):
+    objects = models.Manager
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='Название')
     age = models.FloatField(default=0, verbose_name='Возраст')
     radius = models.FloatField(default=0, verbose_name='Радиус')
     mass = models.FloatField(default=0, verbose_name='Масса')
     temperature = models.FloatField(default=0, verbose_name='Температура')
-    system = models.ForeignKey('StarSystem', verbose_name='Звездная система', on_delete=models.CASCADE)
+    system = models.ForeignKey(StarSystem, verbose_name='Звездная система', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

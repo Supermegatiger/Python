@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+
 # Register your models here.
 class GalaxyTypeAdmin(admin.ModelAdmin):
     t = ['name']
@@ -17,6 +18,7 @@ class GalaxyAdmin(admin.ModelAdmin):
     t = ['name', 'age', 'size']
     list_display = t
     list_display_links = t
+    list_filter = t
     search_fields = t
     # fields = ('first_name', 'second_name', 'email')
 
@@ -28,6 +30,7 @@ class StarSystemAdmin(admin.ModelAdmin):
     t = ['name', 'age', 'radius']
     list_display = t
     list_display_links = t
+    list_filter = t
     search_fields = t
     # fields = ('first_name', 'second_name', 'email')
 
@@ -36,9 +39,10 @@ class StarSystemAdmin(admin.ModelAdmin):
 
 
 class PlanetAdmin(admin.ModelAdmin):
-    t = ['name', 'age', 'radius', 'mass', 'habitable' ]
+    t = ['name', 'age', 'radius', 'mass', 'habitable']
     list_display = t
     list_display_links = t
+    list_filter = t
     search_fields = t
     # fields = ('first_name', 'second_name', 'email')
 
@@ -47,9 +51,10 @@ class PlanetAdmin(admin.ModelAdmin):
 
 
 class StarAdmin(admin.ModelAdmin):
-    t = ['name', 'age', 'radius', 'mass', 'temperature' ]
+    t = ['name', 'age', 'radius', 'mass', 'temperature']
     list_display = t
     list_display_links = t
+    list_filter = t
     search_fields = t
     # fields = ('first_name', 'second_name', 'email')
 
